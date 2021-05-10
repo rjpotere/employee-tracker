@@ -1,0 +1,24 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Employee database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjpotere/employee-tracker.git"
+  },
+  "author": "Ryan Potere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjpotere/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/rjpotere/employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1"
+  }
+}
