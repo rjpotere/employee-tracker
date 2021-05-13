@@ -15,7 +15,7 @@
   This application is covered under license type: MIT
 
   ## **Description:** 
- This command line prompt program will allow the user to enter a new employee into the data base, select their position which will have a relationship to a certain department. The user is able to select the new employees manager and save this information to the database. The user is able to edit any user's job title in the database which will then update the database. The user is also able to view all employees that are currently in the database. This will show their current title, the department they belong to, their salary and their current manager.  
+ This command line prompt program will allow the user to enter a new employee into the data base, select their position which will have a relationship to a certain department. The user is able to select the new employees manager and save this information to the database. The user is able to edit any user's job title in the database which will then update the database. The user is also able to view all employees that are currently in the database. This will show their current title, the department they belong to, their salary and their current manager.  https://github.com/rjpotere/employee-tracker
 
  ![gif](gif/create.gif)
  ![gif](gif/view.gif)
