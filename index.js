@@ -2,10 +2,10 @@ const inquirer = require("inquirer");
 const db = require("./db/queries");
 const connection = require("./db/connection");
 
-
 async function viewEmployees() {
     let employees = await db.findAllEmployees();
     console.table(employees);
+    init();
 }
 
 //test function to view all employees and/or enter info into database.
@@ -29,7 +29,6 @@ const init = () => {
         }
     });
 }
-
 
 const createEmployee = () => {
     connection.query('SELECT * FROM job_role', (err, results) => {
@@ -58,6 +57,13 @@ const createEmployee = () => {
                     message: "Select new employee's manager:",
                     choices: ['Mike Smith', 'Jane Doe', 'John Doe', 'No Manager for this employee']
                 },
+                // {
+                //     name: 'restart',
+                //     type: 'rawlist',
+                //     message: "Please select a prompt to continue:",
+                //     choices: ['View all employees', 'Create new employee', 'Update employee','Exit program']
+                // },
+
             ])
             .then((answer) => {
                     if(answer.role === "Junior Developer") {
@@ -72,7 +78,7 @@ const createEmployee = () => {
                     if(answer.role === "Senior Developer") {
                         answer.role = 4;
                     }
-                    if(answer.manager === 'Mike Smith'){
+                    if(answer.manager === "Mike Smith"){
                         answer.manager = 3;
                     }
                     if(answer.manager === 'Jane Doe'){
@@ -80,7 +86,11 @@ const createEmployee = () => {
                     }
                     if(answer.manager === 'John Doe'){
                         answer.manager = 1;
-                    } else {answer.manager = null}
+                    } 
+                    
+                    if (answer.manager === 'No Manager for this employee') {
+                        answer.manager = null;
+                    }
 
                       connection.query(
                      'INSERT INTO employee SET ?',
@@ -95,9 +105,11 @@ const createEmployee = () => {
                          console.log('Succesfully added employee');
                      }
                  );
+                 init();
                 })
 
             })
+            
     };
 
 // updates employees positions 
@@ -108,12 +120,12 @@ const updateEmployee = () => {
             .prompt([
                 {
                     name: 'name',
-                    type: 'rawlist',
+                    type: 'list',
                     message: 'Select the employee you would like to update:',
                     choices () {
                         let nameArray = [];
-                        results.forEach(({first_name}) => {
-                            nameArray.push(first_name);
+                        results.forEach(({id, first_name, last_name}) => {
+                            nameArray.push(id + " " + first_name + " " + last_name);
                         });
                         return nameArray;
                     }
@@ -125,11 +137,15 @@ const updateEmployee = () => {
                     choices: ['Junior Developer', 'Attorney', 'Front End Lead', 'Senior Developer']
                 },
 
-
             ])
             .then((answer) => {
 
-                if(answer.role === "Junior Developer") {
+               if (answer.name) {
+                answer.name = answer.name.split(" ")[0];
+                console.log(answer.name);
+               }
+
+                 if(answer.role === "Junior Developer") {
                     answer.role = 1;
                 }
                     if(answer.role === "Attorney") {
@@ -149,7 +165,7 @@ const updateEmployee = () => {
                                 job_role_id: answer.role,
                             },
                             {
-                                first_name: answer.name,
+                                id: answer.name,
                             },
                           ],
                     (err) => {
@@ -157,12 +173,16 @@ const updateEmployee = () => {
                          console.log('Succesfully updated employee');
                      }
                  );
+
+                 init();
+
                 })
 
             })
     };
 
 init();
+
 
 
 
